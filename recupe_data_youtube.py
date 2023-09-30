@@ -1,11 +1,11 @@
+import csv
 import requests
 from bs4 import BeautifulSoup
 
 # URL de la recherche YouTube
 url = "https://www.youtube.com/results"
 params = {
-    "search_query": "Free Bombap Beats",
-    "sp": "EgIQAQ%253D%253D"  # Cette chaîne de requête filtre les vidéos par pertinence.
+    "search_query": "Free Bombap Beats"
 }
 
 # Effectuer la requête HTTP
@@ -17,13 +17,19 @@ if response.status_code == 200:
     soup = BeautifulSoup(response.text, "html.parser")
     
     # Extraire les titres des vidéos
-    titles = [a.text for a in soup.find_all("a", class_="yt-simple-endpoint style-scope ytd-video-renderer")]
-    
+    titles = [a.get_text() for a in soup.find_all("a", class_="yt-simple-endpoint style-scope ytd-video-renderer")]
+    print('titles')
     # Filtrer les titres commençant par "Free Bombap Beats"
     bombap_titles = [title for title in titles if title.startswith("Free Bombap Beats")]
 
-    # Afficher les titres
-    for title in bombap_titles:
-        print(title)
+    # Enregistrer les titres dans un fichier CSV
+    with open('bombap_beats_titles.csv', 'w', newline='', encoding='utf-8') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Titre de la vidéo'])
+
+        for title in bombap_titles:
+            csv_writer.writerow([title])
+
+    print("Les titres ont été enregistrés avec succès dans 'bombap_beats_titles.csv'.")
 else:
     print("La requête a échoué avec le code :", response.status_code)
