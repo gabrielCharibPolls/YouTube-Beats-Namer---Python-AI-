@@ -1,4 +1,4 @@
-D'accord, voici le contenu du `README.md` encapsulé dans une balise de code pour que vous puissiez le copier facilement :
+
 
 ```plaintext
 ```
