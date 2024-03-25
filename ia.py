@@ -1,4 +1,5 @@
 import pandas as pd
+import spacy
 import os
 import sys
 from tensorflow.keras.preprocessing.text import Tokenizer
